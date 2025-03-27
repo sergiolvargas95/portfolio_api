@@ -45,4 +45,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function projects() {
+        return $this->hasMany(Project::class);
+    }
+
+    public function technologies() {
+        return $this->hasMany(Technology::class);
+    }
 }
