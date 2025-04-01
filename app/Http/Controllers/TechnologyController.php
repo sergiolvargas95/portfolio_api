@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTechnologyRequest;
+use App\Http\Requests\UpdateTechnologyRequest;
 use App\Models\Technology;
 use Illuminate\Http\Request;
 
@@ -18,13 +20,24 @@ class TechnologyController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTechnologyRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:100',
-            'image' => 'required|image|mimes:jpeg,jpg,png,webp|max:2048',
-            'user_id' => 'required|exists:users,id'
+        if($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('technologies', 'public');
+        } else {
+            $imagePath = $request->image;
+        }
+
+        $technology = Technology::create([
+            'title' => $request->title,
+            'image' => $imagePath,
+            'user_id' => $request->user_id
         ]);
+
+        return response()->json([
+            'message' => 'The Technology has been created Successfully',
+            'data' => $technology
+        ], 201);
     }
 
     /**
@@ -32,15 +45,29 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        //
+        return response()->json($technology, 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Technology $technology)
+    public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        //
+        if($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('projects', 'public');
+        } else {
+            $imagePath = $technology->image;
+        }
+
+        $technology->update([
+            'title' => $request->title,
+            'image' => $imagePath,
+        ]);
+
+        return response()->json([
+            'message' => 'The Technology has been updated Successfully',
+            'technology' => $technology
+        ], 200);
     }
 
     /**
@@ -48,6 +75,10 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+
+        return response()->json([
+            'message' => 'The technology with id '. $technology->id .' has been deleted'
+        ],204);
     }
 }
