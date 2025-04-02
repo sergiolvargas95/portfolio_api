@@ -24,6 +24,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User created successfully',
+            'user' => $user
         ], 201)->header('Authorization', 'Bearer ' . $token);
     }
 
@@ -35,13 +36,16 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)
+            ->select('id', 'email', 'name')
+            ->first();
 
         $token = $user->createToken("API TOKEN")->plainTextToken;
 
         return response()->json([
             'status' => true,
-            'message' => 'User logged in Successfuly'
+            'message' => 'User logged in Successfuly',
+            'user' => $user
         ], 200)->header('Authorization', 'Bearer' . $token);
     }
 }
