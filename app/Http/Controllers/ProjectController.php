@@ -14,7 +14,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return response()->json(Project::all(), 200);
+        return response()->json(Project::paginate(), 200);
     }
 
     /**
