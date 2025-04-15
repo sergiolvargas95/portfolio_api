@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TechnologyController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ Route::get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')->prefix('v1')->group(function() {
     Route::apiResource('projects', ProjectController::class);
     Route::apiResource('technologies', TechnologyController::class);
+    Route::apiResource('users', UserController::class);
 });
 
 Route::post('/register', [AuthController::class, 'registerUser']);
