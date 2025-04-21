@@ -24,12 +24,10 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:200',
             'email' => 'required|email|max:200',
-            'password' => 'required|min:8',
             'short_description' => 'nullable|string|max:255',
             'long_description' => 'nullable|string|max:255',
             'photo' => 'nullable|image|mimes:jpeg, png, jpg|max:2048',
             'profesional_degree' => 'nullable|string|max:100',
-
         ];
     }
 
@@ -39,9 +37,7 @@ class UpdateUserRequest extends FormRequest
             'name.required' => 'Name is required',
             'name.max' => 'Name should not be more than 200 characters',
             'email.required' => 'Email is required',
-            'email.email' => 'Type an Email',
-            'password.required' => 'password is required',
-            'password.min' => 'password should have at least 8 characters',
+            'email.email' => 'Type an Email'
         ];
     }
 }
