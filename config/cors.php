@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:4200'],
+    'allowed_origins' => ['https://sergiolvargas95.github.io/portfolio_admin_frontend'],
 
     'allowed_origins_patterns' => [],
 
