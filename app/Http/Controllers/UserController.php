@@ -2,12 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\User\AuthUserDTO;
+use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
+use App\Services\User\UserService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+
+
+
     /**
      * Display the specified resource.
      */
@@ -41,4 +49,6 @@ class UserController extends Controller
             'user' => $user
         ], 200);
     }
+
+
 }
